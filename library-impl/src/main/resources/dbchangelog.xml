@@ -1,0 +1,93 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="feket (generated)" id="1603115573898-1">
+        <createTable tableName="author">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="born_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="born_in" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-2">
+        <createTable tableName="author_books">
+            <column name="author_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="books_book_id" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-3">
+        <createTable tableName="book">
+            <column name="book_id" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="count" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_of_entry" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="release_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="BIGINT"/>
+            <column name="publisher_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-4">
+        <createTable tableName="hibernate_sequence">
+            <column name="next_val" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-5">
+        <createTable tableName="publisher">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="date_of_foundation" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-7">
+        <createIndex indexName="FKgtvt7p649s4x80y6f4842pnfq" tableName="book">
+            <column name="publisher_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-8">
+        <createIndex indexName="FKklnrv3weler2ftkweewlky958" tableName="book">
+            <column name="author_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-9">
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="author_books" constraintName="FKfvabqdr9njwv4khjqkf1pbmma" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="author" validate="true"/>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-10">
+        <addForeignKeyConstraint baseColumnNames="publisher_id" baseTableName="book" constraintName="FKgtvt7p649s4x80y6f4842pnfq" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="publisher" validate="true"/>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-11">
+        <addForeignKeyConstraint baseColumnNames="books_book_id" baseTableName="author_books" constraintName="FKhr5m3bp4u97vs63yh4rmtu6b7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="book_id" referencedTableName="book" validate="true"/>
+    </changeSet>
+    <changeSet author="feket (generated)" id="1603115573898-12">
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book" constraintName="FKklnrv3weler2ftkweewlky958" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="author" validate="true"/>
+    </changeSet>
+    <changeSet id="loaded-test-data" author="daniel.fekete">
+        <sqlFile path="classpath:library-fixed.sql"/>
+    </changeSet>
+</databaseChangeLog>
