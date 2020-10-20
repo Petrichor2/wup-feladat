@@ -1,0 +1,38 @@
+version: '3.3'
+services:
+  library-db:
+    image: 'mysql:8'
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wup
+    ports:
+      - '127.0.0.1:3306:3306'
+  library-impl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '127.0.0.1:8080:8080'
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mysql://library-db:3306/wup'
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_password: password
+      SPRING_JPA_DATABASE-PLATFORM: 'org.hibernate.dialect.MySQL8Dialect'
+    depends_on:
+      - library-db
+  library-stats:
+    build:
+      context: .
+      dockerfile: Dockerfile-stats
+    ports:
+      - '127.0.0.1:8081:8081'
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mysql://library-db:3306/wup'
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_password: password
+      SPRING_JPA_DATABASE-PLATFORM: 'org.hibernate.dialect.MySQL8Dialect'
+      STATISTICS_BOOK_COUNT_UNTIL: '1994-01-01'
+    depends_on:
+      - library-db
