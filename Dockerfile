@@ -8,5 +8,5 @@ RUN mvn -f library-impl/pom.xml clean package
 FROM openjdk:8-jre-alpine3.9
 
 COPY --from=MAVEN_BUILD /library-impl/target/library-impl-1.0.0-SNAPSHOT.jar /application.jar
-EXPOSE 8080
+EXPOSE 8081
 CMD ["java", "-jar", "/application.jar"]

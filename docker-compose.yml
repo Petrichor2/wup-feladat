@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '127.0.0.1:8080:8080'
+      - '127.0.0.1:8081:8081'
     environment:
       SPRING_DATASOURCE_URL: 'jdbc:mysql://library-db:3306/wup'
       SPRING_DATASOURCE_USERNAME: root
@@ -27,7 +27,7 @@ services:
       context: .
       dockerfile: Dockerfile-stats
     ports:
-      - '127.0.0.1:8081:8081'
+      - '127.0.0.1:8080:8080'
     environment:
       SPRING_DATASOURCE_URL: 'jdbc:mysql://library-db:3306/wup'
       SPRING_DATASOURCE_USERNAME: root
